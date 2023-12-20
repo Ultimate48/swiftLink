@@ -32,7 +32,6 @@ app.get('/:shortened', (req, res) => {
         }
     }).then((result) => {
         const { link } = result;
-        console.log(link);
         res.redirect(link);
     });
 });
