@@ -16,6 +16,10 @@ app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
+app.get('/healthCheck', (req, res) => {
+    res.status(200).send('OK');
+});
+
 app.post('/register', (req, res) => {
     const { shortened, link } = req.body;
     URLs.create({
