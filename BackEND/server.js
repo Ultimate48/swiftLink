@@ -35,7 +35,7 @@ app.get('/:shortened', (req, res) => {
             shortened
         }
     }).then((result) => {
-        const { link } = result;
+        const link = result.dataValues.link;
         res.redirect(link);
     });
 });
