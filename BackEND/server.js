@@ -13,7 +13,7 @@ app.use((req, res, next) => {
 });
 
 app.get('/', (req, res) => {
-    res.redirect("https://swiftlink.onrender.com/");
+    res.redirect("https://swiftlink-web.onrender.com");
 });
 
 app.get('/healthCheck', (req, res) => {
