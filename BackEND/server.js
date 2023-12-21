@@ -23,6 +23,21 @@ app.get('/healthCheck', (req, res) => {
     res.status(200).send('OK');
 });
 
+app.get('/available/:shortened', (req, res) => {
+    const { shortened } = req.params;
+    URLs.findOne({
+        where: {
+            shortened
+        }
+    }).then((result) => {
+        if (result === null) {
+            res.send(true);
+        } else {
+            res.send(false);
+        }
+    });
+});
+
 app.post('/register', (req, res) => {
     const { shortened, link } = req.body;
     URLs.create({
