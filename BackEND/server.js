@@ -15,7 +15,7 @@ app.use((req, res, next) => {
     next();
 });
 
-app.get('*', (req, res) => {
+app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '..',  'FrontEnd', 'dist', 'index.html'));
 });
 
@@ -53,8 +53,11 @@ app.get('/:shortened', (req, res) => {
             shortened
         }
     }).then((result) => {
-        const link = result.dataValues.link;
-        res.redirect(link);
+        if (result === null) {
+            res.status(404).send('Not Found');
+        } else {
+            res.redirect(result.dataValues.link);
+        }
     });
 });
 

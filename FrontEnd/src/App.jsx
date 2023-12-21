@@ -64,6 +64,7 @@ function App() {
     }
 
     fUrl = (protocol || 'http://') + www + fUrl;
+
   }
 
   const encode = () => {
