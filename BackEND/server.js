@@ -38,12 +38,13 @@ app.get('/available/:shortened', (req, res) => {
     });
 });
 
-app.post('/register', (req, res) => {
+app.post('/register', async (req, res) => {
     const { shortened, link } = req.body;
-    URLs.create({
+    const url = await URLs.create({
         shortened,
         link
     });
+    res.send(url);
 });
 
 app.get('/:shortened', (req, res) => {
