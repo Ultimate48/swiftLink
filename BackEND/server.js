@@ -1,9 +1,12 @@
 const express = require('express');
+const path = require('path');
 const app = express();
 app.use(express.json());
 const port = process.env.PORT || 3000;
 
 const { URLs } = require('./models');
+
+app.use(express.static(path.join(__dirname, '..', 'FrontEnd', 'dist')));
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*'); // Update with your client's origin
@@ -12,8 +15,8 @@ app.use((req, res, next) => {
     next();
 });
 
-app.get('/', (req, res) => {
-    res.redirect("https://swiftlink-web.onrender.com");
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '..',  'FrontEnd', 'dist', 'index.html'));
 });
 
 app.get('/healthCheck', (req, res) => {
