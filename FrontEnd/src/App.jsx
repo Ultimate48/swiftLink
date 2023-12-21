@@ -101,7 +101,7 @@ function App() {
     }).then(res => res.json())
     .then(data => {
       if(data) {
-        setLink('https//swiftlink.onrender.com/' + data.shortened);
+        setLink('https://swiftlink.onrender.com/' + data.shortened);
       }
     })
       }
