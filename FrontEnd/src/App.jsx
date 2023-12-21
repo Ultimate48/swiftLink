@@ -108,6 +108,14 @@ function App() {
     })
   }
 
+  const copyLink = (e) => {
+    e.preventDefault();
+    navigator.clipboard.writeText(link);
+    alert('Link copied to clipboard');
+  };
+
+  const copyBtnStyles = `bg-gray-200 rounded-md px-2 py-1 border-2 border-solid border-gray-400 ${link.length > 0 ? '' : 'hidden'}`
+
   const encode = () => {
     setActive('Encode');
   };
@@ -151,8 +159,10 @@ function App() {
               onClick={(e) => handleSubmit(e)}>Generate</button>
             </form>
             <br />
-            <div className='flex justify-center'>
-              <a href={link} className='text-xl text-blue-700 underline'>{link}</a>
+            <div className='flex justify-center gap-4'>
+              <a href={link} className='text-lg text-blue-700 underline
+              flex justify-center items-center'>{link}</a>
+              <button className={copyBtnStyles} onClick={(e) => copyLink(e)}>Copy</button>
             </div>
             </>
           ) : (
