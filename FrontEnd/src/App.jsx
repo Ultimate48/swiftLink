@@ -78,7 +78,7 @@ function App() {
       fBack = result;
     }
     
-    fetch('http://localhost:3000/available/' + fBack, {
+    fetch('https://swiftlink.onrender/available/' + fBack, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -89,7 +89,7 @@ function App() {
         alert('Back already exists, change it');
         return;
       }else{
-        fetch('http://localhost:3000/register', {
+        fetch('https://swiftlink.onrender/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -101,7 +101,7 @@ function App() {
     }).then(res => res.json())
     .then(data => {
       if(data) {
-        setLink('http://localhost:3000/' + data.shortened);
+        setLink('https//swiftlink.onrender/' + data.shortened);
       }
     })
       }
