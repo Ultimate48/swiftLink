@@ -160,7 +160,7 @@ function App() {
             </form>
             <br />
             <div className='flex justify-center gap-4'>
-              <a href={link} type='_blank' className='text-lg text-blue-700 underline
+              <a href={link} target='_blank' rel='noopener noreferrer' className='text-lg text-blue-700 underline
               flex justify-center items-center'>{link}</a>
               <button className={copyBtnStyles} onClick={(e) => copyLink(e)}>Copy</button>
             </div>
