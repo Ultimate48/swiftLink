@@ -19,6 +19,7 @@ function App() {
   const [inputValue, setInputValue] = useState('');
   const [url, setUrl] = useState('');
   const [back, setBack] = useState('');
+  const [link, setLink] = useState('');
 
   const changeUrl = (e) => {
     setUrl(e.target.value);
@@ -65,7 +66,7 @@ function App() {
       return;
     }
 
-    fUrl = (protocol || 'http://') + www + fUrl;
+    fUrl = (protocol || 'http://') + 'www.' + fUrl;
 
     if(fBack === '') {
       const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -76,8 +77,19 @@ function App() {
       }
       fBack = result;
     }
-
-    fetch('https://swiftlink.onrender.com/register', {
+    
+    fetch('http://localhost:3000/available/' + fBack, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(res => res.json())
+    .then(data => {
+      if(!data){
+        alert('Back already exists, change it');
+        return;
+      }else{
+        fetch('http://localhost:3000/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -88,9 +100,12 @@ function App() {
       })
     }).then(res => res.json())
     .then(data => {
-      console.log(data);
+      if(data) {
+        setLink('http://localhost:3000/' + data.shortened);
+      }
     })
-
+      }
+    })
   }
 
   const encode = () => {
@@ -113,9 +128,10 @@ function App() {
         <div className='w-[320px] flex justify-center mt-[50px]'>
             <Button text="Shorten URL" isActive={active === 'Encode'} onClick={encode} />
         </div>
-        <div className='bg-white h-[300px] w-[800px] rounded-lg
+        <div className='bg-white w-[800px] rounded-lg
         border-2 border-solid border-gray-300 mt-[-1.6px] z-2 p-10'>
           {active === 'Encode' ? (
+            <>
             <form className='flex flex-col items-center gap-2'>
               <div className='flex justify-center gap-5 h-12 w-[700px]'>
                 <span className='text-2xl font-bold h-full items-center flex justify-center'>Enter the URL : </span>
@@ -134,6 +150,11 @@ function App() {
               <button className='bg-blue-500 w-[160px] mx-4 mt-6 h-[50px] rounded-lg text-xl font-semibold' type="submit" 
               onClick={(e) => handleSubmit(e)}>Generate</button>
             </form>
+            <br />
+            <div className='flex justify-center'>
+              <a href={link} className='text-xl text-blue-700 underline'>{link}</a>
+            </div>
+            </>
           ) : (
             <input
               className='w-[700px] h-[50px] rounded-lg border-2 border-solid border-gray-300 mt-5 ml-5'
