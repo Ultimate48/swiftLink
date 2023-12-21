@@ -78,7 +78,7 @@ function App() {
       fBack = result;
     }
     
-    fetch('https://swiftlink.onrender/available/' + fBack, {
+    fetch('https://swiftlink.onrender.com/available/' + fBack, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -89,7 +89,7 @@ function App() {
         alert('Back already exists, change it');
         return;
       }else{
-        fetch('https://swiftlink.onrender/register', {
+        fetch('https://swiftlink.onrender.com/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
