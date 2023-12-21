@@ -121,8 +121,8 @@ function App() {
     <>
       <div className="h-screen flex flex-col justify-center items-center
       bg-gray-200">
-        <span className='absolute top-20 text-5xl font-bold bg-gradient-to-r from-purple-600 to-red-600 text-transparent bg-clip-text'>SwiftLink</span>
-        <div className=' mt-[50px] h-[1px] bg-black w-[400px]'></div>
+        <span className='top-20 text-5xl font-bold bg-gradient-to-r from-purple-600 to-red-600 text-transparent bg-clip-text'>SwiftLink</span>
+        <div className=' mt-[20px] h-[1px] bg-black w-[400px]'></div>
         <span className='text-3xl font-semibold mt-5'>Streamline Your  
         <span className='bg-gradient-to-l from-green-600 to-blue-600 text-transparent bg-clip-text font-bold'> Links</span> Effortlessly</span>
         <div className='w-[320px] flex justify-center mt-[50px]'>
