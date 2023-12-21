@@ -18,6 +18,53 @@ function App() {
   const [active, setActive] = useState('Encode');
   const [inputValue, setInputValue] = useState('');
   const [url, setUrl] = useState('');
+  const [back, setBack] = useState('');
+
+  const changeUrl = (e) => {
+    setUrl(e.target.value);
+  };
+
+  const changeBack = (e) => {
+    setBack(e.target.value);
+  };
+  
+  const handleSubmit = (e) => {
+
+    let fUrl = url;
+
+    e.preventDefault();
+    if(fUrl === '') {
+      alert('Please enter a valid URL');
+      return;
+    }
+
+
+    //Check if url contains http or https, if it does remove it and store it in a variable
+    let protocol = '';
+    if(fUrl.includes('http://')) {
+      protocol = 'http://';
+      fUrl = fUrl.replace('http://', '');
+    } else if(url.includes('https://')) {
+      protocol = 'https://';
+      fUrl = fUrl.replace('https://', '');
+    }
+
+    //Check if url contains www, if it does remove it and store it in a variable
+    let www = '';
+    if(fUrl.includes('www.')) {
+      www = 'www.';
+      fUrl = fUrl.replace('www.', '');
+    }
+
+    const urlRegex = /^([a-zA-Z0-9-]+\.){1,}[a-zA-Z]{2,}(?:\/[^\s]*)?$/;
+
+    if(!urlRegex.test(fUrl)) {
+      alert('Please enter a valid URL');
+      return;
+    }
+
+    fUrl = (protocol || 'http://') + www + fUrl;
+  }
 
   const encode = () => {
     setActive('Encode');
@@ -42,21 +89,23 @@ function App() {
         <div className='bg-white h-[300px] w-[800px] rounded-lg
         border-2 border-solid border-gray-300 mt-[-1.6px] z-2 p-10'>
           {active === 'Encode' ? (
-            <form className='flex flex-col gap-2'>
-              <div className='flex justify-center gap-5 h-12'>
+            <form className='flex flex-col items-center gap-2'>
+              <div className='flex justify-center gap-5 h-12 w-[700px]'>
                 <span className='text-2xl font-bold h-full items-center flex justify-center'>Enter the URL : </span>
-                <input type='url' className='border border-solid w-[500px] rounded-lg outline-none px-3 border-gray-600' placeholder='Enter you url'></input>
+                <input type='url' className='border border-solid w-[500px] rounded-lg outline-none px-3 border-gray-600' placeholder='Enter you url' onChange={(e) => changeUrl(e)}></input>
               </div>
-              <div className='flex-col'>
+              <div className='flex-col w-full'>
                 <div className='text-xl font-bold mx-4 '>Domain</div>
                 <div className='flex items-center mt-1'>
                 <div className='border-2 border-solid border-gray-300 h-12 rounded-lg w-fit mx-4 bg-gray-200 flex items-center p-4'>
                   swiftlink.onrender
                 </div>
                 <span className='flex justify-center items-center text-[20px] w-fit'>/</span>
-                <input type='url' className=' h-12 border border-solid w-[500px] rounded-lg outline-none px-3 border-gray-600 mx-4' placeholder='Enter a back(optional)'></input>
+                <input type='url' className=' h-12 border border-solid w-full rounded-lg outline-none px-3 border-gray-600 mx-4' placeholder='Enter a back(optional)' onChange={(e) => changeBack(e)}></input>
                 </div>
               </div>
+              <button className='bg-blue-500 w-[160px] mx-4 mt-6 h-[50px] rounded-lg text-xl font-semibold' type="submit" 
+              onClick={(e) => handleSubmit(e)}>Generate</button>
             </form>
           ) : (
             <input
