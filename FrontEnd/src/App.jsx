@@ -29,8 +29,10 @@ function App() {
   };
   
   const handleSubmit = (e) => {
+    e.preventDefault();
 
     let fUrl = url;
+    let fBack = back;
 
     e.preventDefault();
     if(fUrl === '') {
@@ -64,6 +66,30 @@ function App() {
     }
 
     fUrl = (protocol || 'http://') + www + fUrl;
+
+    if(fBack === '') {
+      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      let result = '';
+      const charactersLength = characters.length;
+      for (let i = 0; i < 7; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      }
+      fBack = result;
+    }
+
+    fetch('https://swiftlink.onrender.com/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        shortened: fBack,
+        link: fUrl
+      })
+    }).then(res => res.json())
+    .then(data => {
+      console.log(data);
+    })
 
   }
 
