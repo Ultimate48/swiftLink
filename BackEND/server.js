@@ -57,7 +57,7 @@ app.get('/decode/:shortened', (req, res) => {
         if (result === null) {
             res.status(404).send('Not Found');
         } else {
-            res.redirect(result.dataValues.link);
+            res.send(result);
         }
     });
 });
