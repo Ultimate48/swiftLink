@@ -47,7 +47,7 @@ app.post('/register', async (req, res) => {
     res.send(url);
 });
 
-app.get('/:shortened', (req, res) => {
+app.get('/decode/:shortened', (req, res) => {
     const { shortened } = req.params;
     URLs.findOne({
         where: {
