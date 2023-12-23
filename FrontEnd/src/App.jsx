@@ -20,6 +20,8 @@ function App() {
   const [url, setUrl] = useState('');
   const [back, setBack] = useState('');
   const [link, setLink] = useState('');
+  const [decodeLink, setDecodeLink] = useState('');
+  const [decodedLink, setDecodedLink] = useState('');
 
   const changeUrl = (e) => {
     setUrl(e.target.value);
@@ -27,6 +29,10 @@ function App() {
 
   const changeBack = (e) => {
     setBack(e.target.value);
+  };
+
+  const changeLink = (e) => {
+    setDecodeLink(e.target.value);
   };
   
   const handleSubmit = (e) => {
@@ -108,10 +114,68 @@ function App() {
     })
   }
 
+  const decodeUrl = (e) => {
+    e.preventDefault();
+
+    let dl = decodeLink;
+    
+    if(dl === '') {
+      alert('Please enter a valid URL');
+      return;
+    }
+
+    if(!dl.includes('swiftlink.onrender.com')) {
+      alert('Please enter a valid URL');
+      return;
+    }
+
+    if (dl.includes('https://') || dl.includes('http://')) {
+      dl = dl.replace('https://', '');
+      dl = dl.replace('http://', '');
+    }
+
+    if (dl.includes('www.')) {
+      decodeLink = decodeLink.replace('www.', '');
+    }
+
+    if (decodeLink.includes('swiftlink.onrender.com/')) {
+      dl = dl.replace('swiftlink.onrender.com/', '');
+    }
+
+    fetch('http://localhost:3000/decode/' + dl, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(res => {
+      if(res.status === 404) {
+        alert('URL not found');
+        return;
+      }
+      return res.json();
+    }
+    )
+    .then(data => {
+      if(data) {
+        setDecodedLink(data.link);
+      }
+    })
+
+  }
+
   const copyLink = (e) => {
     e.preventDefault();
+    //Check if link is empty
+    if(link === '') {
+      navigator.clipboard.writeText(decodedLink);
+    }
+    else{
     navigator.clipboard.writeText(link);
-    alert('Link copied to clipboard');
+    }
+    e.target.innerHTML = 'Copied';
+    setTimeout(() => {
+      e.target.innerHTML = 'Copy';
+    }, 2000);
   };
 
   const copyBtnStyles = `bg-gray-200 rounded-md px-2 py-1 border-2 border-solid border-gray-400 ${link.length > 0 ? '' : 'hidden'}`
@@ -135,6 +199,7 @@ function App() {
         <span className='bg-gradient-to-l from-green-600 to-blue-600 text-transparent bg-clip-text font-bold'> Links</span> Effortlessly</span>
         <div className='w-[320px] flex justify-center mt-[50px]'>
             <Button text="Shorten URL" isActive={active === 'Encode'} onClick={encode} />
+            <Button text="Decode URL" isActive={active === 'Decode'} onClick={decode} />
         </div>
         <div className='bg-white w-[800px] rounded-lg
         border-2 border-solid border-gray-300 mt-[-1.6px] z-2 p-10'>
@@ -166,13 +231,22 @@ function App() {
             </div>
             </>
           ) : (
-            <input
-              className='w-[700px] h-[50px] rounded-lg border-2 border-solid border-gray-300 mt-5 ml-5'
-              type="text"
-              placeholder="Enter URL to decode"
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-            />
+            <>
+            <form className='flex flex-col justify-center items-center'>
+              <div className='flex justify-center gap-5 h-12 w-[700px]'>
+              <span className='text-2xl font-bold h-full items-center flex justify-center'>Enter the URL : </span>
+              <input type='url' className='border border-solid w-[500px] rounded-lg outline-none px-3 border-gray-600' placeholder='Enter you url' onChange={(e) => changeLink(e)}></input>
+              </div>
+              <button className='bg-blue-500 w-[160px] mx-4 mt-6 h-[50px] rounded-lg text-xl font-semibold' type="submit" 
+              onClick={(e) => decodeUrl(e)}>Decode</button>
+            </form>
+            <br />
+            <div className='flex justify-center gap-4'>
+              <a href={decodedLink} target='_blank' rel='noopener noreferrer' className='text-lg text-blue-700 underline
+              flex justify-center items-center'>{decodedLink}</a>
+              <button className={copyBtnStyles} onClick={(e) => copyLink(e)}>Copy</button>
+            </div>
+            </>
           )}
         </div>
       </div>
