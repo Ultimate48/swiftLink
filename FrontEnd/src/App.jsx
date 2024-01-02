@@ -142,7 +142,7 @@ function App() {
       dl = dl.replace('swiftlink.onrender.com/', '');
     }
 
-    fetch('https://swiftlink.onrender/decode/' + dl, {
+    fetch('https://swiftlink.onrender.com/decode/' + dl, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
