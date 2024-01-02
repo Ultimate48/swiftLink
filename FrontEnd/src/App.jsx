@@ -245,8 +245,6 @@ function App() {
               <a href={decodedLink} target='_blank' rel='noopener noreferrer' className='text-lg text-blue-700 underline
               flex justify-center items-center'>{decodedLink}</a>
               <div className='flex justify-center gap-4'>
-              <a href={link} target='_blank' rel='noopener noreferrer' className='text-lg text-blue-700 underline
-              flex justify-center items-center'>{decodedLink}</a>
             </div>
             </div>
             </>
