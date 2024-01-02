@@ -142,7 +142,7 @@ function App() {
       dl = dl.replace('swiftlink.onrender.com/', '');
     }
 
-    fetch('http://localhost:3000/decode/' + dl, {
+    fetch('http://lswiftlink.onrender/decode/' + dl, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -244,7 +244,10 @@ function App() {
             <div className='flex justify-center gap-4'>
               <a href={decodedLink} target='_blank' rel='noopener noreferrer' className='text-lg text-blue-700 underline
               flex justify-center items-center'>{decodedLink}</a>
-              <button className={copyBtnStyles} onClick={(e) => copyLink(e)}>Copy</button>
+              <div className='flex justify-center gap-4'>
+              <a href={link} target='_blank' rel='noopener noreferrer' className='text-lg text-blue-700 underline
+              flex justify-center items-center'>{decodedLink}</a>
+            </div>
             </div>
             </>
           )}
