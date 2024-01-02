@@ -62,6 +62,21 @@ app.get('/decode/:shortened', (req, res) => {
     });
 });
 
+app.get('/:shortened', (req, res) => {
+    const { shortened } = req.params;
+    URLs.findOne({
+        where: {
+            shortened
+        }
+    }).then((result) => {
+        if (result === null) {
+            res.status(404).send('Not Found');
+        } else {
+            res.redirect(result.link);
+        }
+    });
+});
+
 app.listen(port);
 
 
